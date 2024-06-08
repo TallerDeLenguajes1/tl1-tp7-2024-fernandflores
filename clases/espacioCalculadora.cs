@@ -1,4 +1,4 @@
-namespace espacioCalculador
+/*namespace espacioCalculador
 {
 public class Calculadora
 {
@@ -40,4 +40,4 @@ public class Calculadora
     }
     public double Resultado{ get => dato;}
     }
-    }
+    }*/
