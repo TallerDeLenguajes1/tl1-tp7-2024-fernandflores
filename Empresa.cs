@@ -85,7 +85,7 @@ public class Empresa
     }
     public string showClase ()
     {
-        return (apellido+"\n"+nombre+"\n"+"fecha de nacimiento: "+fechaNacimiento+"\n"+"estado civil: "+estadoCivil+"\n"+"fecha ingreso: "+fechaIngreso+"\n"+"sueldo: "+sueldo+"\n"+"puesto: "+puesto+"\n"+"edad: "+calcularEdad()+"\n"+"antiguedad: "+calcularAntiguedad(fechaIngreso)+"\n"+"le faltan: "+calcularjubilacion()+" años para jubilarse"+"\n"+"sueldo neto: ARS$ "+calcularSalario()); 
+        return ("apellido y nombre: "+apellido+" "+nombre+"\n"+"fecha de nacimiento: "+fechaNacimiento+"\n"+"estado civil: "+estadoCivil+"\n"+"fecha ingreso: "+fechaIngreso+"\n"+"sueldo basico: "+sueldo+"\n"+"puesto: "+puesto+"\n"+"edad: "+calcularEdad()+"\n"+"antiguedad: "+calcularAntiguedad(fechaIngreso)+"\n"+"le faltan: "+calcularjubilacion()+" años para jubilarse"+"\n"+"sueldo neto: ARS$ "+calcularSalario()); 
     }
 }
  public enum Cargo

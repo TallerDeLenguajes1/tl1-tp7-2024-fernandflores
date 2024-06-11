@@ -5,35 +5,83 @@ Console.WriteLine("ingrese nombre");
 empresa.Nombre=Console.ReadLine();
 Console.WriteLine("ingrese apellido");
 empresa.Apellido=Console.ReadLine();
-Console.WriteLine(empresa.Apellido);
-Console.WriteLine("ingrese fecha nacimiento");
-if (DateTime.TryParse(Console.ReadLine(), out fecha1))
+bool banderaFechaNacimiento=false;
+do
 {
-  empresa.FechaNacimiento=fecha1;
-}
-else
+  Console.WriteLine("ingrese fecha nacimiento");
+  if (DateTime.TryParse(Console.ReadLine(), out fecha1))
+  {
+    empresa.FechaNacimiento=fecha1;
+    banderaFechaNacimiento=true;
+  }
+  else
+  {
+    Console.WriteLine("ingreso fecha incorrecta");
+  }
+}while(!banderaFechaNacimiento); 
+bool banderaEstadoCivil=false;
+do
 {
-  Console.WriteLine("ingreso fecha incorrecta");
-}
-Console.WriteLine("ingrese estado civil c: | casado s: soltero");
-if (char.TryParse(Console.ReadLine(), out estadoC))
+  Console.WriteLine("ingrese estado civil c: | casado s: soltero");
+  if (char.TryParse(Console.ReadLine().ToLower(), out estadoC) && (estadoC=='c' || estadoC=='s')) // console.readline().tolower lee lo que se ingresa, lo pasa a minuscula y si es un char sale la variable estadoC
+  {
+    empresa.EstadoCivil=estadoC;
+    banderaEstadoCivil= true;
+  }
+}while(!banderaEstadoCivil);  
+bool banderaFechaIngreso=false;
+do
 {
-  empresa.EstadoCivil=estadoC;
-}
-Console.WriteLine("ingrese fecha de ingreso a la empresa");
-if (DateTime.TryParse(Console.ReadLine(), out fecha2))
-{
-  empresa.FechaIngreso=fecha2;
-}
-else
-{
-  Console.WriteLine("ingreso fecha incorrecta");
-}
+  Console.WriteLine("ingrese fecha de ingreso a la empresa");
+  if (DateTime.TryParse(Console.ReadLine(), out fecha2))
+  {
+    empresa.FechaIngreso=fecha2;
+    banderaFechaIngreso= true;
+  }
+  else
+  {
+    Console.WriteLine("ingreso fecha incorrecta");
+  }
+}while(!banderaFechaIngreso);  
 Console.WriteLine("ingrese su sueldo");
 if (double.TryParse(Console.ReadLine(), out double auxSueldo))
 {
   empresa.SueldoBasico=auxSueldo;
 }
+bool banderaCargo=false; // bandera para realizar el encontrado
+do
+{
+  Console.WriteLine("ingrese su puesto 1: auxiliar | 2: administrativo | 3: ingeniero | 4: especialista | 5: investigador");
+  if (int.TryParse(Console.ReadLine(), out int cargo))
+  {
+    switch (cargo)
+    {
+      case 1:
+        empresa.Puesto= Cargo.auxiliar;
+        banderaCargo= true;
+      break;
+      case 2:
+        empresa.Puesto= Cargo.administrativo;
+        banderaCargo= true;
+      break;
+      case 3:
+        empresa.Puesto= Cargo.ingeniero; 
+        banderaCargo= true;
+      break;
+      case 4:
+        empresa.Puesto= Cargo.especialista;
+        banderaCargo= true;
+      break;
+      case 5:
+        empresa.Puesto= Cargo.investigador;
+        banderaCargo= true;
+      break;
+      default:
+        Console.WriteLine("ingreso opcion invalida");
+      break;
+    }
+  }
+}while(!banderaCargo); 
 int edad= empresa.calcularEdad();
 int antiguedad= empresa.calcularAntiguedad(empresa.FechaIngreso);
 int jubilacion= empresa.calcularjubilacion();
