@@ -9,6 +9,10 @@ public class Empresa
         private double sueldo;
         private Cargo puesto;
 
+    public Empresa()
+    {
+    }
+
     public Empresa(string nombre, string apellido, DateTime fechaNacimiento, char estadoCivil, DateTime fechaIngreso, double sueldo, Cargo puesto) // the constructor 
     {
         this.nombre= nombre;
@@ -20,26 +24,26 @@ public class Empresa
         this.puesto=puesto;
     }
 
-    public string Nombre { get => nombre; set => nombre = value; }
+    public string Nombre { get => nombre; set => nombre = value; } // esto permite poder usar Nombre en Calculadora.cs
     public string Apellido { get => apellido; set => apellido = value; }
     public char EstadoCivil { get => estadoCivil; set => estadoCivil = value; }
-    public double Salario { get => sueldo; set => sueldo = value; }
+    public double SueldoBasico { get => sueldo; set => sueldo = value; }
     public DateTime FechaNacimiento {get=>fechaNacimiento; set=>fechaNacimiento=value;}
     public DateTime FechaIngreso {get=>fechaIngreso; set=>fechaIngreso=value;}
     public Cargo Puesto { get => puesto; set => puesto = value; }
     public int calcularAntiguedad(DateTime ingreso){
         DateTime fechaActual= DateTime.Today;
-        int antiguedad= fechaActual.Year - ingreso.Year;
-        if(ingreso.Date>fechaActual.AddYears(-antiguedad))
+        int antiguedad= fechaActual.Year - ingreso.Year; // ej: antiguedad= 2024-05-19 - 2020-08-08= 2024-2020= 4
+        if(ingreso.Date>fechaActual.AddYears(-antiguedad)) //// compara la fecha fechacimiento con la fechaactual(-antiguedad) 2024-05-19 - 4(antiguedad) = 2020-05-19 si ingreso (2020-08-08) es mayor que 2020-05-19 le resta uno a antiguedad ya que signfica que aun no se cumplio el aniversario
         {
             antiguedad--;
         }
         return antiguedad;
     }
-    public int calcularEdad(DateTime nacimiento){
+    public int calcularEdad(){ //puedo no pedir parametros ya que esta todo aca en la clase y no necesito ingresar datos de afuera (por el usuario) igual hice una asi de ejemplo en el calcularAntiguedad 
         DateTime fechaActual= DateTime.Today;
-        int edad= fechaActual.Year - nacimiento.Year;
-        if(nacimiento.Date>fechaActual.AddYears(-edad))
+        int edad= fechaActual.Year - fechaNacimiento.Year;
+        if(fechaNacimiento.Date>fechaActual.AddYears(-edad)) // compara la fecha fechacimiento con la fechaactual(-edad)...
         {
             edad--;
         }
@@ -47,7 +51,7 @@ public class Empresa
     }
     public int calcularjubilacion()
     {
-        int edad= calcularEdad(fechaNacimiento); //uso la funcion porque... para que volver a calcular la edad si tengo una funcion que ya lo hace
+        int edad= calcularEdad(); //uso la funcion porque... para que volver a calcular la edad si tengo una funcion que ya lo hace
         int cantidadAnios=0;
         if(edad<65)
         {
@@ -58,7 +62,7 @@ public class Empresa
 
     public double calcularSalario()
     {
-        double adicional=0;
+        double adicional=0, sueldoNeto=0;
         int antiguedad= calcularAntiguedad(fechaIngreso);
         if(antiguedad>20)
         {
@@ -66,7 +70,7 @@ public class Empresa
         }
         else
         {
-            adicional= sueldo*(antiguedad/100);
+            adicional= sueldo*(antiguedad/100.0);
         }
         if (puesto == Cargo.ingeniero || puesto== Cargo.especialista)
         {
@@ -76,7 +80,12 @@ public class Empresa
         {
             adicional+=150000;
         }
-        return sueldo;
+        sueldoNeto=sueldo + adicional;
+        return sueldoNeto;
+    }
+    public string showClase ()
+    {
+        return (apellido+"\n"+nombre+"\n"+"fecha de nacimiento: "+fechaNacimiento+"\n"+"estado civil: "+estadoCivil+"\n"+"fecha ingreso: "+fechaIngreso+"\n"+"sueldo: "+sueldo+"\n"+"puesto: "+puesto+"\n"+"edad: "+calcularEdad()+"\n"+"antiguedad: "+calcularAntiguedad(fechaIngreso)+"\n"+"le faltan: "+calcularjubilacion()+" años para jubilarse"+"\n"+"sueldo neto: ARS$ "+calcularSalario()); 
     }
 }
  public enum Cargo
